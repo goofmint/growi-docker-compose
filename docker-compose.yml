@@ -36,13 +36,22 @@ services:
     restart: unless-stopped
     volumes:
       - growi_data:/data
-
+    networks:
+      - dokploy-network
+   labels:
+     - "traefik.enable=true"
+     - "traefik.http.routers.wiki.entrypoints=websecure"
+     - "traefik.http.routers.wiki.tls.certResolver=letsencrypt"
+     - "traefik.http.routers.wiki.rule=Host(`wiki.moongift.co.jp`)"
+     - "traefik.http.services.wiki.loadbalancer.server.port=3000"
   mongo:
     image: mongo:6.0
     restart: unless-stopped
     volumes:
       - mongo_configdb:/data/configdb
       - mongo_db:/data/db
+    networks:
+      - dokploy-network
 
   elasticsearch:
     build:
@@ -60,9 +69,15 @@ services:
     volumes:
       - es_data:/usr/share/elasticsearch/data
       - ./elasticsearch/v8/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    networks:
+      - dokploy-network
 
 volumes:
   growi_data:
   mongo_configdb:
   mongo_db:
   es_data:
+
+networks:
+  dokploy-network:
+    external: true
