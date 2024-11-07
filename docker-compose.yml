@@ -37,7 +37,7 @@ services:
     volumes:
       - growi_data:/data
     networks:
-      - dokploy-network-wiki
+      - dokploy-network
 
   mongo:
     image: mongo:6.0
@@ -46,7 +46,7 @@ services:
       - mongo_configdb:/data/configdb
       - mongo_db:/data/db
     networks:
-      - dokploy-network-wiki
+      - dokploy-network
 
   elasticsearch:
     build:
@@ -65,7 +65,7 @@ services:
       - es_data:/usr/share/elasticsearch/data
       - ./elasticsearch/v8/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
     networks:
-      - dokploy-network-wiki
+      - dokploy-network
 
 volumes:
   growi_data:
@@ -74,5 +74,5 @@ volumes:
   es_data:
 
 networks:
-  dokploy-network-wiki:
+  dokploy-network:
     external: true
