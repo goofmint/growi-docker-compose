@@ -1,6 +1,6 @@
 # syntax = docker/dockerfile:1.4
 
-ARG version=7
+ARG version=7.0.23
 
 
 FROM debian:stable-slim as fetch-dockerize
